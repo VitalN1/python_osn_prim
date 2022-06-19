@@ -1,8 +1,15 @@
-n, k = map(int, input().split())
-def c(n,k):
-    if k == 1:
-        return n
-    elif n== k or k==0:
-        return 1
-    else:
-        return c(n-1, k) + c(n-1, k-1)
+import simplecrypt
+
+with open("encrypted.bin", "rb") as inp:
+    encrypted = inp.read()
+with open("passwords.txt", "r") as p:
+    while True:
+        try:
+            pasw = p.readline().strip()
+            if not pasw:
+                break
+            res = simplecrypt.decrypt(pasw, encrypted).decode('utf8')
+            print(pasw)
+            print(res)
+        except simplecrypt.DecryptionException:
+            pass
